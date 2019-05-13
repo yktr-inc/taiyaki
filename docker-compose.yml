@@ -1,0 +1,55 @@
+version: '3.1'
+
+services:
+  traefik:
+    container_name: taiyaki-traefik
+    image: traefik:latest
+    command: --api --docker
+    ports:
+      - "80:80"
+      - "443:443"
+      - "18080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./.docker/traefik/traefik.toml:/etc/traefik/traefik.toml:ro
+    labels:
+      - "traefik.frontend.rule=Host:srv.taiyaki.test"
+      - "traefik.port=8080"
+  mongo:
+    container_name: taiyaki-mongo
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  server:
+    container_name: taiyaki-api
+    image: node:10-alpine
+    volumes:
+      - './server:/home/node/app:rw,consistent'
+    working_dir: '/home/node/app'
+    environment:
+      MONGODB_USER: "root"
+      MONGODB_PASS: "password"
+      MONGODB_DBNAME: "taiyaki"
+      JWT_SECRET: "tropMimz"
+    command: 'yarn start'
+    ports:
+      - 127.0.0.1:3000:3000
+    labels:
+      - "traefik.frontend.rule=Host:api.taiyaki.test"
+      - "traefik.port=3000"
+  front:
+    container_name: taiyaki-front
+    image: node:lts-alpine
+    working_dir: /home/taiyaki/front
+    volumes:
+      - ./front:/home/taiyaki/front
+    ports:
+      - "8080:3000"
+    labels:
+      - "traefik.frontend.rule=Host:taiyaki.test"
+      - "traefik.port=3000"
+    command: ["yarn", "start"]
