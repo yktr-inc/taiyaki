@@ -12,7 +12,10 @@ restart:
 	docker-compose up
 
 install:
-	cd front && yarn install
+	cd front && \
+	yarn install && \
+	cd ../api && \
+	yarn install
 
 clean-front:
 	cd front && \
