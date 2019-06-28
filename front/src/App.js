@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Notes from './components/Notes';
+import { StateProvider } from './store/state';
 
-function App() {
+const App = () => {
+  const initialState = {
+    draft: {
+      content: ''
+    },
+    notes: []
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'setDraft':
+        return {
+          ...state,
+          draft: action.draft
+        };
+      case 'addNote':
+        return {
+          ...state,
+          notes: [
+            ...state.notes,
+            action.note
+          ]
+        };
+      case 'setNote':
+        return {
+          ...state,
+          notes: state.notes.map(note => action.note._id === note._id ? action.note : note)
+        };
+      case 'setNotes':
+        return {
+          ...state,
+          notes: action.notes
+        };
+      default:
+        return state;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <Notes />
+    </StateProvider>
   );
-}
+};
 
 export default App;
