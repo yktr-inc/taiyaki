@@ -1,53 +1,51 @@
-import React  from 'react';
+import React from 'react';
+import Modal from 'react-modal';
+import { debounce } from 'lodash';
+import Editor from './Editor';
 import repository from '../../store/repository';
 import { useStateValue } from '../../store/state';
-import { debounce } from 'lodash';
+
+Modal.setAppElement('#root');
 
 const Input = () => {
-  const [{ draft }, dispatch] = useStateValue();
+  const [{ draft, modalOpen }, dispatch] = useStateValue();
 
-  const handleChange = debounce(function (val) {
+  const handleChange = debounce(function(value) {
     const savedDraft = {
       ...draft,
-      content: val
+      content: value
     };
 
     if (savedDraft._id) {
-      repository.patch(`/notes/${savedDraft._id}`, savedDraft)
-        .then(res => {
-          if (res.status === 200) {
-            dispatch({
-              type: 'setNote',
-              note: res.data
-            })
-          }
-        });
+      repository.patch(`/notes/${savedDraft._id}`, savedDraft).then(res => {
+        if (res.status === 200) {
+          dispatch({
+            type: 'setNote',
+            note: res.data
+          });
+        }
+      });
     } else {
-      repository.post('/notes', savedDraft)
-        .then(res => {
-          if (res.status === 201) {
-            dispatch({
-              type: 'setDraft',
-              draft: res.data
-            });
-            dispatch({
-              type: 'addNote',
-              note: res.data
-            });
-          }
-        });
+      repository.post('/notes', savedDraft).then(res => {
+        if (res.status === 201) {
+          dispatch({
+            type: 'setDraft',
+            draft: res.data
+          });
+          dispatch({
+            type: 'addNote',
+            note: res.data
+          });
+        }
+      });
     }
   }, 500);
 
   return (
-    <>
-      <textarea
-        cols="30"
-        rows="10"
-        placeholder="Qu'est ce qui te passe par la tête mon ptit pote ?"
-        onChange={(e) => handleChange(e.target.value)}
-      />
-    </>
+    <Modal isOpen={modalOpen}>
+      <button onClick={() => dispatch({ type: 'closeModal' })}>close</button>
+      <Editor value={draft.content} onChange={handleChange} />
+    </Modal>
   );
 };
 

@@ -6,7 +6,6 @@ const NoteRouter = require('./routes/note');
 const app = express();
 const port = 3000;
 
-
 mongoose.connect('mongodb://mongo:27017', {
   useNewUrlParser: true,
   dbName: 'myDD',

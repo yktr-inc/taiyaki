@@ -1,31 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Editor from '../ui/Editor';
 import Card from './Card';
-import { useStateValue } from "../../store/state";
-import Input from "./Input";
+import { useStateValue } from '../../store/state';
+import repository from '../../store/repository';
 
 const Item = ({ item, style }) => {
-  const [edit, setEdit] = useState(false);
   const [, dispatch] = useStateValue();
 
-  const handleEditMode = () => {
-    dispatch({
-      type: 'setDraft',
-      draft: item
-    });
-    setEdit(true)
-  };
+  return React.useMemo(() => {
+    const handleEditMode = () => {
+      dispatch({
+        type: 'setDraft',
+        draft: item
+      });
+      dispatch({ type: 'openModal' });
+    };
 
-  return (
-    <div style={style}>
-      {!edit &&
+    const deleteNote = () => {
+      repository.delete(`/notes/${item._id}`).then(res => {
+        if (res.status === 204) {
+          dispatch({
+            type: 'deleteNote',
+            id: item._id
+          });
+        }
+      });
+    };
+
+    return (
+      <div style={style}>
         <Card>
           <button onClick={handleEditMode}>Edit</button>
-          {item.content}
+          <button onClick={deleteNote}>Delete</button>
+          <Editor readOnly={true} value={item.content} />
         </Card>
-      }
-      {edit && <Input />}
-    </div>
-  )
+      </div>
+    );
+  }, [dispatch, item, style]);
 };
 
 export default Item;

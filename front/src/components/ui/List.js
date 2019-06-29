@@ -18,11 +18,11 @@ const List = ({ items, itemComponent = Item }) => {
   const ItemName = itemComponent;
   return (
     <div style={listStyle}>
-      {items.map(item =>
+      {items.map(item => (
         <ItemName key={item._id} style={itemStyle} item={item} />
-      )}
+      ))}
     </div>
-  )
+  );
 };
 
 export default List;
