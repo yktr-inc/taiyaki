@@ -1,9 +1,10 @@
-const express = require('express')
+const express = require('express');
 const mongoose = require('mongoose');
-const app = express()
-const port = 3000
-const routes = require('./routes/index.js');
-
+const bodyparser = require('body-parser');
+const cors = require('cors');
+const NoteRouter = require('./routes/note');
+const app = express();
+const port = 3000;
 
 mongoose.connect('mongodb://mongo:27017', {
   useNewUrlParser: true,
@@ -12,12 +13,8 @@ mongoose.connect('mongodb://mongo:27017', {
   pass: 'password'
 });
 
-const Cat = mongoose.model('Cat', { name: String });
-
-const kitty = new Cat({ name: 'Zildjian' });
-kitty.save().then(() => console.log('meow'));
-
-app.get('/', (req, res) => res.send(kitty));
-app.get('*', (req, res) => res.send('Not found!'));
+app.use(cors());
+app.use(bodyparser.json());
+app.use('/notes', NoteRouter);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
