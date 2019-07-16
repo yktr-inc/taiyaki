@@ -3,7 +3,7 @@ import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 
-const MarkdownShortcuts = ({ value, onChange, readOnly = false }) => {
+const MarkdownShortcuts = ({ value, onChange, onClick, readOnly = false }) => {
   const createValue = () =>
     value ? Value.fromJSON(JSON.parse(value)) : Plain.deserialize(value);
 
@@ -140,7 +140,7 @@ const MarkdownShortcuts = ({ value, onChange, readOnly = false }) => {
 
   if (readOnly) {
     return (
-      <Editor value={createValue()} readOnly={true} renderBlock={renderBlock} />
+      <Editor value={createValue()} readOnly={true} renderBlock={renderBlock} onClick={onClick} />
     );
   }
 

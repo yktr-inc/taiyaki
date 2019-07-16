@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiTrash } from 'react-icons/fi'
 import Editor from '../ui/Editor';
 import Card from './Card';
 import { useStateValue } from '../../store/state';
@@ -27,12 +28,14 @@ const Item = ({ item, style }) => {
       });
     };
 
+    const cardBottom = <>
+      <FiTrash onClick={deleteNote} />
+    </>;
+
     return (
       <div style={style}>
-        <Card>
-          <button onClick={handleEditMode}>Edit</button>
-          <button onClick={deleteNote}>Delete</button>
-          <Editor readOnly={true} value={item.content} />
+        <Card bottom={cardBottom}>
+          <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
         </Card>
       </div>
     );

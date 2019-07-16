@@ -1,27 +1,30 @@
 import React from 'react';
+import styled from 'styled-components';
 import Item from './Item';
 
-const listStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  flexWrap: 'wrap',
-  width: '100%'
-};
+const StyledItem = styled.div`
+  word-wrap: break-word;
+`;
 
-const itemStyle = {
-  marginBottom: '20px',
-  maxWidth: '100%',
-  wordWrap: 'break-word'
-};
+const StyledList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  ${StyledItem} {
+    max-width: 20%;
+    margin: 20px;
+  }
+`;
 
 const List = ({ items, itemComponent = Item }) => {
   const ItemName = itemComponent;
   return (
-    <div style={listStyle}>
+    <StyledList>
       {items.map(item => (
-        <ItemName key={item._id} style={itemStyle} item={item} />
+        <StyledItem key={item._id}><ItemName item={item} /></StyledItem>
       ))}
-    </div>
+    </StyledList>
   );
 };
 

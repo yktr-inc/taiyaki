@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import { FiX } from 'react-icons/fi';
 import { debounce } from 'lodash';
 import Editor from './Editor';
 import repository from '../../store/repository';
@@ -43,7 +44,7 @@ const Input = () => {
 
   return (
     <Modal isOpen={modalOpen}>
-      <button onClick={() => dispatch({ type: 'closeModal' })}>close</button>
+      <FiX onClick={() => dispatch({ type: 'closeModal' })} />
       <Editor value={draft.content} onChange={handleChange} />
     </Modal>
   );
