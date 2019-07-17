@@ -37,10 +37,10 @@ const Item = ({ item, style }) => {
 
     return (
       <div style={style}>
-        <Card bottom={cardBottom}>
+        <div bottom={cardBottom}>
           <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
           {form && <Collaborators noteId={item._id} />}
-        </Card>
+        </div>
       </div>
     );
   }, [dispatch, item, style, form]);

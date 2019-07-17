@@ -5,6 +5,8 @@ import Login from './components/views/Login';
 import Register from './components/views/Register';
 import { StateProvider } from './store/state';
 import repository from './store/repository';
+import { Menu } from 'element-react';
+import 'element-theme-default';
 
 const App = () => {
   const initialState = {
@@ -14,6 +16,10 @@ const App = () => {
     modalOpen: false,
     notes: []
   };
+
+  const favicon = {
+    width: '40px',
+  }
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -72,6 +78,11 @@ const App = () => {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
+      <Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal">
+        <Menu.Item index="1">
+          <img style={favicon} src="favicon.png"/> Taiyaki
+        </Menu.Item>
+      </Menu>
       <Router>
         {localStorage.getItem('token')
           ? <button onClick={logout}>Logout</button>
@@ -85,6 +96,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </Router>
+      <Notes />
     </StateProvider>
   );
 };

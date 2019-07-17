@@ -1,30 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
-
-const StyledItem = styled.div`
-  word-wrap: break-word;
-`;
-
-const StyledList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-
-  ${StyledItem} {
-    max-width: 20%;
-    margin: 20px;
-  }
-`;
+import { Card, Layout } from 'element-react';
 
 const List = ({ items, itemComponent = Item }) => {
   const ItemName = itemComponent;
   return (
-    <StyledList>
+    <div>
+      <Layout.Row gutter="20">
       {items.map(item => (
-        <StyledItem key={item._id}><ItemName item={item} /></StyledItem>
+        <Layout.Col key={item._id} span="4">
+        <Card key={item._id}>
+          <ItemName item={item} />
+        </Card>
+        </Layout.Col>
       ))}
-    </StyledList>
+      </Layout.Row>
+    </div>
   );
 };
 

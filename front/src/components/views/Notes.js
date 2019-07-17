@@ -3,11 +3,16 @@ import Input from '../ui/Input';
 import List from '../ui/List';
 import { useStateValue } from '../../store/state';
 import repository from '../../store/repository';
+import { Button, Layout } from 'element-react';
 
 const containerStyle = {
   width: '80vw',
   margin: 'auto'
 };
+
+const marginBlock = {
+  marginTop: '50px',
+}
 
 const Notes = () => {
   const [{ notes, sharedNotes }, dispatch] = useStateValue();
@@ -38,15 +43,21 @@ const Notes = () => {
 
   return (
     <>
-      <button onClick={createNewNote}>Create new note</button>
-      <div style={containerStyle}>
-        <List items={notes} />
-        {sharedNotes && <>
-          <hr/>
-          <List items={sharedNotes} />
-        </>}
-      </div>
-      <Input />
+      <Layout.Row style={marginBlock} type="flex" justify="center">
+        <Layout.Col span="2">
+          <Button onClick={createNewNote}>Add a new note</Button>
+        </Layout.Col>
+      </Layout.Row>
+      <Layout.Row style={marginBlock} type="flex">
+        <div style={containerStyle}>
+          <List items={notes} />
+          {sharedNotes && <>
+            <hr/>
+            <List items={sharedNotes} />
+          </>}
+        </div>
+        <Input />
+      </Layout.Row>
     </>
   );
 };
