@@ -10,7 +10,7 @@ const containerStyle = {
   margin: 'auto'
 };
 
-const Notes = ({ match }) => {
+const Notes = () => {
   const [{ notes }, dispatch] = useStateValue();
 
   const createNewNote = () => {
@@ -31,7 +31,6 @@ const Notes = ({ match }) => {
 
   return (
     <>
-      <Link to={`${match.url}/components`}>Login</Link>
       <button onClick={createNewNote}>Create new note</button>
       <div style={containerStyle}>
         <List items={notes} />
