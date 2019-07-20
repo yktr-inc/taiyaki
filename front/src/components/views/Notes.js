@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import Input from './ui/Input';
-import List from './ui/List';
-import { useStateValue } from '../store/state';
-import repository from '../store/repository';
+import { Link } from 'react-router-dom';
+import Input from '../ui/Input';
+import List from '../ui/List';
+import { useStateValue } from '../../store/state';
+import repository from '../../store/repository';
 
 const containerStyle = {
   width: '80vw',
   margin: 'auto'
 };
 
-const Notes = () => {
+const Notes = ({ match }) => {
   const [{ notes }, dispatch] = useStateValue();
 
   const createNewNote = () => {
@@ -30,6 +31,7 @@ const Notes = () => {
 
   return (
     <>
+      <Link to={`${match.url}/components`}>Login</Link>
       <button onClick={createNewNote}>Create new note</button>
       <div style={containerStyle}>
         <List items={notes} />

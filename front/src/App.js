@@ -1,5 +1,7 @@
 import React from 'react';
-import Notes from './components/Notes';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Notes from './components/views/Notes';
+import Login from './components/views/Login';
 import { StateProvider } from './store/state';
 
 const App = () => {
@@ -57,7 +59,10 @@ const App = () => {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <Notes />
+      <Router>
+        <Route path="/" exact component={Notes} />
+        <Route path="/login" component={Login} />
+      </Router>
     </StateProvider>
   );
 };
