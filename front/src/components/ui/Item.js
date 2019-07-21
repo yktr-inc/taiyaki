@@ -36,12 +36,12 @@ const Item = ({ item, style }) => {
     </>;
 
     return (
-      <div style={style}>
+      <>
         <div bottom={cardBottom}>
           <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
           {form && <Collaborators noteId={item._id} />}
         </div>
-      </div>
+      </>
     );
   }, [dispatch, item, style, form]);
 };

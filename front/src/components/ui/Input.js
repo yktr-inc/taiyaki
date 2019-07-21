@@ -5,11 +5,17 @@ import { debounce } from 'lodash';
 import Editor from './Editor';
 import repository from '../../store/repository';
 import { useStateValue } from '../../store/state';
+import { Message } from 'element-react';
 
 Modal.setAppElement('#root');
 
 const Input = () => {
+
   const [{ draft, modalOpen }, dispatch] = useStateValue();
+
+  const modalButton = {
+    cursor: 'pointer',
+  }
 
   const handleChange = debounce(function(value) {
     const savedDraft = {
@@ -42,9 +48,19 @@ const Input = () => {
     }
   }, 500);
 
+  const closeModal = () =>  {
+    dispatch({
+      type: 'closeModal'
+    });
+    Message({
+      message: 'The note has been successfully saved.',
+      type: 'success'
+    });
+  }
+
   return (
     <Modal isOpen={modalOpen}>
-      <FiX onClick={() => dispatch({ type: 'closeModal' })} />
+      <FiX style={modalButton} onClick={() => closeModal()} />
       <Editor value={draft.content} onChange={handleChange} />
     </Modal>
   );
