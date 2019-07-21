@@ -1,6 +1,10 @@
 import React from 'react';
-import Notes from './components/Notes';
+import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
+import Notes from './components/views/Notes';
+import Login from './components/views/Login';
+import Register from './components/views/Register';
 import { StateProvider } from './store/state';
+import repository from './store/repository';
 
 const App = () => {
   const initialState = {
@@ -55,9 +59,27 @@ const App = () => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    repository.defaults.headers.common['Authorization'] = null;
+    window.location = '/login'
+  };
+
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <Notes />
+      <Router>
+        {localStorage.getItem('token')
+          ? <button onClick={logout}>Logout</button>
+          : <>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/register">Register</NavLink>
+          </>
+        }
+
+        <Route path="/" exact component={Notes} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+      </Router>
     </StateProvider>
   );
 };

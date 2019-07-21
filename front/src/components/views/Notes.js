@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import Input from './ui/Input';
-import List from './ui/List';
-import { useStateValue } from '../store/state';
-import repository from '../store/repository';
+import { Link } from 'react-router-dom';
+import Input from '../ui/Input';
+import List from '../ui/List';
+import { useStateValue } from '../../store/state';
+import repository from '../../store/repository';
 
 const containerStyle = {
   width: '80vw',

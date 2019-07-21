@@ -5,19 +5,26 @@ const router = express.Router();
 
 router
   .get('/', function(req, res) {
-    Note.find().then(data => res.json(data));
+    Note.find({
+      user: req.user
+    }).then(data => res.json(data));
   })
   .post('/', (req, res) => {
-    const note = new Note(req.body);
+    const { content } = req.body;
+
+    const note = new Note({
+      content,
+      user: req.user,
+    });
 
     note
       .save()
       .then(data => res.status(201).json(data))
       .catch(error => {
         if (error.name === 'ValidationError') {
-          res.status(400).json(error.errors);
+          res.boom.badRequest(error.errors);
         } else {
-          res.sendStatus(500);
+          res.boom.internal();
         }
       });
   })
