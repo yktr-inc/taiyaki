@@ -78,25 +78,30 @@ const App = () => {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal">
-        <Menu.Item index="1">
-          <img style={favicon} src="favicon.png"/> Taiyaki
-        </Menu.Item>
-      </Menu>
       <Router>
+      <Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal">
+        <NavLink to="/">
+          <Menu.Item index="1">
+            <img style={favicon} src="favicon.png"/>
+            Taiyaki
+          </Menu.Item>
+        </NavLink>
         {localStorage.getItem('token')
-          ? <button onClick={logout}>Logout</button>
+          ? <Menu.Item index="2"><a onClick={logout}>Logout</a></Menu.Item>
           : <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/register">Register</NavLink>
+            <NavLink to="/login">
+              <Menu.Item index="2">Login</Menu.Item>
+            </NavLink>
+            <NavLink to="/register">
+              <Menu.Item index="3">Register</Menu.Item>
+            </NavLink>
           </>
         }
-
+      </Menu>
         <Route path="/" exact component={Notes} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </Router>
-      <Notes />
     </StateProvider>
   );
 };

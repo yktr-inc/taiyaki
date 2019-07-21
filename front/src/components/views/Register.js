@@ -1,6 +1,7 @@
 import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import repository from '../../store/repository';
+import { Input, Button } from 'element-react';
 
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {
@@ -33,15 +34,15 @@ const Login = ({ history }) => {
       render={({ isSubmitting }) => (
         <Form>
           <div>
-            <Field type="text" name="username" placeholder="Username" />
+            <Field type="text" name="username" component={Input} placeholder="Username" />
             <ErrorMessage name="username" component="div" />
           </div>
           <div>
-            <Field type="password" name="password" placeholder="Password" />
+            <Field type="password" name="password" component={Input} placeholder="Password" />
             <ErrorMessage name="password" component="div" />
           </div>
           <div>
-            <button type="submit" disabled={isSubmitting}>Register</button>
+            <button type="submit" disabled={isSubmitting}><Button>Register</Button></button>
           </div>
         </Form>
       )}

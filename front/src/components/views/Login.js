@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import repository from '../../store/repository';
+import { Input, Button, Layout } from 'element-react';
 
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {
@@ -19,6 +20,8 @@ const Login = ({ history }) => {
 
   return (
     <>
+      <Layout.Row style={ {marginTop: "50px"} } gutter="20" justify="space-around" type="flex">
+      <Layout.Col span="6">
       <Formik
         initialValues={{
           username: 'hknorr',
@@ -28,21 +31,27 @@ const Login = ({ history }) => {
         render={({ isSubmitting }) => (
           <Form>
             <div>
-              <Field type="text" name="username" placeholder="Username" />
+              <Field type="text" name="username" component={Input} placeholder="Username" />
               <ErrorMessage name="username" component="div" />
             </div>
             <div>
-              <Field type="password" name="password" placeholder="Password" />
+              <Field type="password" name="password" component={Input} placeholder="Password" />
               <ErrorMessage name="password" component="div" />
             </div>
             <div>
-              <button type="submit" disabled={isSubmitting}>Login</button>
+              <Button>
+                <button type="submit" disabled={isSubmitting}>Login</button>
+              </Button>
             </div>
           </Form>
         )}
       >
       </Formik>
-      <Link to="/register">Create an account</Link>
+      <Link to="/register">
+        <Button type="success">Create an account</Button>
+      </Link>
+      </Layout.Col>
+      </Layout.Row>
     </>
   )
 };
