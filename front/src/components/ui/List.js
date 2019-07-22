@@ -14,9 +14,7 @@ const List = ({ items, itemComponent = Item }) => {
       <Layout.Row gutter="20">
       {items.map(item => (
         <Layout.Col key={item._id} span="4">
-        <Card style={cardStyle} key={item._id}>
-          <ItemName item={item} />
-        </Card>
+          <ItemName item={item} key={item._id} />
         </Layout.Col>
       ))}
       </Layout.Row>

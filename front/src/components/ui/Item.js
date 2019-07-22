@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import { FiTrash, FiUserPlus, FiTag, FiPenTool } from 'react-icons/fi'
 import Editor from '../ui/Editor';
 import Collaborators from '../ui/Collaborators';
-import Card from './Card';
 import { useStateValue } from '../../store/state';
 import repository from '../../store/repository';
-import { Button, Popover } from 'element-react';
+import { Button, Popover, Dialog, Message, Card } from 'element-react';
 import styled from 'styled-components';
 
 const Item = ({ item, style }) => {
+
+  const [dialogVisible, setDialogVisible] = useState(false);
+
   const [, dispatch] = useStateValue();
   const [form, setForm] = useState(false);
+
+  const cardStyle = {
+    background: item.color,
+  }
 
   const ButtonRow = styled.div`
     opacity: 0;
@@ -47,32 +53,30 @@ const Item = ({ item, style }) => {
           });
         }
       });
+      Message('The note has been successfully deleted.');
     };
 
     const changeColor = () => {
-      alert('clicked');
+      setDialogVisible(true);
     }
 
     const changeCategory = () => {
 
     }
-
-    const cardBottom = <>
-      <FiTrash onClick={deleteNote} />
-      <FiUserPlus onClick={() => setForm(!form)} />
-    </>;
-
     return (
       <>
+        <Card bodyStyle={cardStyle}>
         <StyledCard>
           <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
           <ButtonRow>
             <Button onClick={deleteNote}><FiTrash /></Button>
             <Button onClick={changeCategory}><FiTag /></Button>
             <Button onClick={changeColor}><FiPenTool /></Button>
+            <FiUserPlus onClick={() => setForm(!form)} />
             {form && <Collaborators noteId={item._id} />}
           </ButtonRow>
         </StyledCard>
+        </Card>
       </>
     );
   }, [dispatch, item, style, form]);

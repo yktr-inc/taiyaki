@@ -13,6 +13,8 @@ const Input = () => {
 
   const [{ draft, modalOpen }, dispatch] = useStateValue();
 
+  const [ color, setColor ] = React.useState(draft.color);
+
   const modalButton = {
     cursor: 'pointer',
   }
@@ -28,7 +30,7 @@ const Input = () => {
         if (res.status === 200) {
           dispatch({
             type: 'setNote',
-            note: res.data
+            note: res.data,
           });
         }
       });
