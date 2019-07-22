@@ -34,15 +34,15 @@ const Login = ({ history }) => {
       render={({ isSubmitting }) => (
         <Form>
           <div>
-            <Field type="text" name="username" component={Input} placeholder="Username" />
+            <Field type="text" name="username" component="input" placeholder="Username" />
             <ErrorMessage name="username" component="div" />
           </div>
           <div>
-            <Field type="password" name="password" component={Input} placeholder="Password" />
+            <Field type="password" name="password" component="input" placeholder="Password" />
             <ErrorMessage name="password" component="div" />
           </div>
           <div>
-            <button type="submit" disabled={isSubmitting}><Button>Register</Button></button>
+            <button type="submit" disabled={isSubmitting}>Register</button>
           </div>
         </Form>
       )}
