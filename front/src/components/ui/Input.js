@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiTag, FiPenTool } from 'react-icons/fi';
 import { debounce } from 'lodash';
 import Editor from './Editor';
 import repository from '../../store/repository';
 import { useStateValue } from '../../store/state';
-import { Message } from 'element-react';
+import { Message, Layout, Button, ColorPicker, Select } from 'element-react';
 
 Modal.setAppElement('#root');
 
@@ -13,11 +13,15 @@ const Input = () => {
 
   const [{ draft, modalOpen }, dispatch] = useStateValue();
 
-  const [ color, setColor ] = React.useState(draft.color);
+  const modalStyle = {
+    content : {
+      backgroundColor: draft.color,
+    }
+  };
 
   const modalButton = {
     cursor: 'pointer',
-  }
+  };
 
   const handleChange = debounce(function(value) {
     const savedDraft = {
@@ -60,9 +64,25 @@ const Input = () => {
     });
   }
 
+  const changeColor = (color) => {
+    draft.color = color;
+    handleChange(draft.content);
+  };
+
+  const changeCategory = () => {
+    alert("category");
+  };
+
   return (
-    <Modal isOpen={modalOpen}>
-      <FiX style={modalButton} onClick={() => closeModal()} />
+    <Modal style={modalStyle} isOpen={modalOpen}>
+      <Layout.Row>
+        <Layout.Col span="1">
+          <FiX style={modalButton} onClick={() => closeModal()} />
+        </Layout.Col>
+        <Layout.Col span="12">
+        <ColorPicker onChange={changeColor} value={draft.color}></ColorPicker>
+        </Layout.Col>
+      </Layout.Row>
       <Editor value={draft.content} onChange={handleChange} />
     </Modal>
   );
