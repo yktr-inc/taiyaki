@@ -5,10 +5,20 @@ const Category = require('../models/category');
 const router = express.Router();
 
 router
-  .get('/', function(req, res) {
-    Note.find({
+  .get('/', async function(req, res) {
+    const payload = {
       user: req.user,
+    }
+
+    if(typeof req.query.cat !== 'undefined'){
+      const data = await Category.find({label: req.query.cat}).exec();
+      payload.category = data[0]._id;
+    }
+
+    Note.find({
+      ...payload,
     }).then(data => res.json(data));
+
   })
   .get('/shared', function(req, res) {
     console.log(req.user._id);
