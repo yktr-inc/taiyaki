@@ -8,6 +8,7 @@ const passport = require('passport');
 require('dotenv').config();
 
 const NoteRouter = require('./routes/note');
+const UserRouter = require('./routes/user');
 const AuthRouter = require('./routes/auth');
 
 const app = express();
@@ -31,5 +32,6 @@ require('./config/passport')(passport);
 
 app.use('/', AuthRouter);
 app.use('/notes', passport.authenticate('jwt', {session: false}), NoteRouter);
+app.use('/users', passport.authenticate('jwt', {session: false}), UserRouter);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

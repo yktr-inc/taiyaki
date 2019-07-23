@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Input from '../ui/Input';
 import List from '../ui/List';
 import { useStateValue } from '../../store/state';
@@ -11,7 +10,7 @@ const containerStyle = {
 };
 
 const Notes = () => {
-  const [{ notes }, dispatch] = useStateValue();
+  const [{ notes, sharedNotes }, dispatch] = useStateValue();
 
   const createNewNote = () => {
     dispatch({ type: 'resetDraft' });
@@ -27,6 +26,14 @@ const Notes = () => {
         });
       }
     });
+    repository.get('/notes/shared').then(res => {
+      if (res.status === 200) {
+        dispatch({
+          type: 'setSharedNotes',
+          notes: res.data
+        });
+      }
+    });
   }, [dispatch]);
 
   return (
@@ -34,6 +41,10 @@ const Notes = () => {
       <button onClick={createNewNote}>Create new note</button>
       <div style={containerStyle}>
         <List items={notes} />
+        {sharedNotes && <>
+          <hr/>
+          <List items={sharedNotes} />
+        </>}
       </div>
       <Input />
     </>
