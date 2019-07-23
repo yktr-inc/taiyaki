@@ -2,11 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
 import Notes from './components/views/Notes';
 import Login from './components/views/Login';
+import NotFound from './components/views/NotFound';
 import Register from './components/views/Register';
 import { StateProvider } from './store/state';
 import repository from './store/repository';
 import { Menu } from 'element-react';
 import 'element-theme-default';
+
+const favicon = {
+  width: '40px',
+}
 
 const App = () => {
   const initialState = {
@@ -16,10 +21,6 @@ const App = () => {
     modalOpen: false,
     notes: []
   };
-
-  const favicon = {
-    width: '40px',
-  }
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -65,6 +66,11 @@ const App = () => {
           ...state,
           sharedNotes: action.notes
         };
+      case 'setCategories':
+        return {
+          ...state,
+          categories: action.categories
+        };
       default:
         return state;
     }
@@ -80,7 +86,7 @@ const App = () => {
     <StateProvider initialState={initialState} reducer={reducer}>
       <Router>
       <Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal">
-        <NavLink to="/">
+        <NavLink to="/app">
           <Menu.Item index="1">
             <img style={favicon} src="favicon.png"/>
             Taiyaki
@@ -98,7 +104,8 @@ const App = () => {
           </>
         }
       </Menu>
-        <Route path="/" exact component={Notes} />
+        <Route path="/" exact component={NotFound} />
+        <Route path="/app" component={Notes} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </Router>

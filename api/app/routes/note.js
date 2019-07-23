@@ -1,12 +1,13 @@
 const express = require('express');
 const Note = require('../models/note');
+const Category = require('../models/category');
 
 const router = express.Router();
 
 router
   .get('/', function(req, res) {
     Note.find({
-      user: req.user
+      user: req.user,
     }).then(data => res.json(data));
   })
   .get('/shared', function(req, res) {
