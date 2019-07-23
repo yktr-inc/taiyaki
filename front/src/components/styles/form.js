@@ -16,17 +16,6 @@ export const inputStyle = {
   }
 
 export const buttonStyle = {
-    width: "100%",
-    display: "inline-block",
-    lineHeight: "1",
-    whiteSpace: "nowrap",
-    cursor: "pointer",
-    background: "#fff",
-    border: "1px solid #c4c4c4",
-    borderTopColor: "rgb(196, 196, 196)",
-    borderRightColor: "rgb(196, 196, 196)",
-    borderBottomColor: "rgb(196, 196, 196)",
-    borderLeftColor: "rgb(196, 196, 196)",
     color: "#1f2d3d",
     margin: "0",
     padding: "10px 15px",
