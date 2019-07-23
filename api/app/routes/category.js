@@ -12,12 +12,12 @@ router
   .post('/', (req, res) => {
     const { label } = req.body;
 
-    const note = new Category({
+    const category = new Category({
       label,
       user: req.user,
     });
 
-    note
+    category
       .save()
       .then(data => res.status(201).json(data))
       .catch(error => {

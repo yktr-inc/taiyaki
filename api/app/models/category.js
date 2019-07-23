@@ -7,9 +7,5 @@ const CategorySchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
-CategorySchema.pre('validate', function(doc) {
-  console.log(doc);
-  return doc;
-});
 
 module.exports = mongoose.model('Category', CategorySchema);
