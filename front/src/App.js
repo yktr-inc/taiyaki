@@ -39,6 +39,14 @@ const App = () => {
           ...state,
           draft: action.draft
         };
+      case 'resetDraft':
+        console.log(state);
+        return {
+          ...state,
+          draft: {
+            content: '',
+          }
+        };
       case 'addNote':
         return {
           ...state,

@@ -9,19 +9,38 @@ import { Message, Layout, Button, ColorPicker, Select } from 'element-react';
 
 Modal.setAppElement('#root');
 
+const colorpickerStyle = {
+  position: "absolute",
+  top: "-20px",
+}
+
 const Input = () => {
 
-  const [{ draft, modalOpen }, dispatch] = useStateValue();
+  const [{ draft, modalOpen, categories }, dispatch] = useStateValue();
+
+  const [category, setCategory] = React.useState(draft.category);
 
   const modalStyle = {
     content : {
-      backgroundColor: draft.color,
+      backgroundColor: draft.color || '#FFF',
     }
   };
 
   const modalButton = {
     cursor: 'pointer',
   };
+
+  React.useEffect(() => {
+    repository.get('/categories').then(res => {
+      if (res.status === 200) {
+        dispatch({
+          type: 'setCategories',
+          categories: res.data
+        });
+      }
+    });
+  }, [dispatch]);
+
 
   const handleChange = debounce(function(value) {
     const savedDraft = {
@@ -58,10 +77,12 @@ const Input = () => {
     dispatch({
       type: 'closeModal'
     });
-    Message({
-      message: 'The note has been successfully saved.',
-      type: 'success'
-    });
+    if(draft.content.length > 0){
+      Message({
+        message: 'The note has been successfully saved.',
+        type: 'success'
+      });
+    }
   }
 
   const changeColor = (color) => {
@@ -69,9 +90,15 @@ const Input = () => {
     handleChange(draft.content);
   };
 
-  const changeCategory = () => {
-    alert("category");
+  const changeCategory = value => {
+    draft.category = value;
+    handleChange(draft.content);
   };
+
+  const deleteCategory = _ => {
+    draft.category = null;
+    handleChange(draft.content);
+  }
 
   return (
     <Modal style={modalStyle} isOpen={modalOpen}>
@@ -80,7 +107,12 @@ const Input = () => {
           <FiX style={modalButton} onClick={() => closeModal()} />
         </Layout.Col>
         <Layout.Col span="12">
-        <ColorPicker onChange={changeColor} value={draft.color}></ColorPicker>
+        <ColorPicker style={colorpickerStyle} onChange={changeColor} value={draft.color}></ColorPicker>
+        <Select filterable={true} value={draft.category} clearable={true} onClear={deleteCategory} onChange={changeCategory}>
+          {categories && categories.map(el => {
+              return <Select.Option key={el._id} label={el.label} value={el._id} />
+            })}
+        </Select>
         </Layout.Col>
       </Layout.Row>
       <Editor value={draft.content} onChange={handleChange} />

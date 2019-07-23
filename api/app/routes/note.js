@@ -18,9 +18,8 @@ router
   })
   .post('/', (req, res) => {
     const { content } = req.body;
-
     const note = new Note({
-      content,
+      ...req.body,
       user: req.user,
     });
 

@@ -18,7 +18,10 @@ const marginBlock = {
 };
 
 const categoriesStyle = {
-  height: "100vh",
+  minHeight: "92vh",
+  a: {
+    decoration: "none",
+  }
 };
 
 const Notes = ({ history }) => {
@@ -74,7 +77,7 @@ const Notes = ({ history }) => {
         <Layout.Col span={3}>
           <Menu defaultActive="1" style={categoriesStyle} >
             <NavLink to="/app">
-              <Menu.Item index="1"><i className="el-icon-menu"></i>All</Menu.Item>
+              <Menu.Item index="1"><i className="el-icon-menu"></i>All notes</Menu.Item>
             </NavLink>
             {categories && categories.map((el, index) => (
               <NavLink to={`/app?category=${el.label}`}>
@@ -91,10 +94,10 @@ const Notes = ({ history }) => {
         </Layout.Row>
         <Layout.Row style={marginBlock} type="flex">
           <div style={containerStyle}>
-            <List items={notes} />
+            <List categories={categories} items={notes} />
             {sharedNotes && <>
               <hr/>
-              <List items={sharedNotes} />
+              <List categories={categories} items={sharedNotes} />
             </>}
           </div>
           <Input />
