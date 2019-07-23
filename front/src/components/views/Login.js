@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import repository from '../../store/repository';
 import { Input, Button, Layout } from 'element-react';
+import { inputStyle, buttonStyle } from '../styles/form.js';
 
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {
@@ -18,6 +19,8 @@ const Login = ({ history }) => {
     });
   };
 
+
+
   return (
     <>
       <Layout.Row style={ {marginTop: "50px"} } gutter="20" justify="space-around" type="flex">
@@ -31,15 +34,15 @@ const Login = ({ history }) => {
         render={({ isSubmitting }) => (
           <Form>
             <div>
-              <Field type="text" name="username" component="input" placeholder="Username" />
+              <Field style={inputStyle} type="text" name="username" component="input" placeholder="Username" />
               <ErrorMessage name="username" component="div" />
             </div>
             <div>
-              <Field type="password" name="password" component="input" placeholder="Password" />
+              <Field style={inputStyle} type="password" name="password" component="input" placeholder="Password" />
               <ErrorMessage name="password" component="div" />
             </div>
             <div>
-                <button type="submit" disabled={isSubmitting}>Login</button>
+                <button style={buttonStyle} type="submit" disabled={isSubmitting}>Login</button>
             </div>
           </Form>
         )}

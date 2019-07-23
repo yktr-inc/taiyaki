@@ -1,7 +1,8 @@
 import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import repository from '../../store/repository';
-import { Input, Button } from 'element-react';
+import { Input, Button, Layout } from 'element-react';
+import { inputStyle, buttonStyle } from '../styles/form.js';
 
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {
@@ -25,6 +26,8 @@ const Login = ({ history }) => {
   };
 
   return (
+    <Layout.Row style={ {marginTop: "50px"} } gutter="20" justify="space-around" type="flex">
+    <Layout.Col span="6">
     <Formik
       initialValues={{
         username: 'hknorr',
@@ -34,20 +37,22 @@ const Login = ({ history }) => {
       render={({ isSubmitting }) => (
         <Form>
           <div>
-            <Field type="text" name="username" component="input" placeholder="Username" />
+            <Field style={inputStyle} type="text" name="username" component="input" placeholder="Username" />
             <ErrorMessage name="username" component="div" />
           </div>
           <div>
-            <Field type="password" name="password" component="input" placeholder="Password" />
+            <Field style={inputStyle} type="password" name="password" component="input" placeholder="Password" />
             <ErrorMessage name="password" component="div" />
           </div>
           <div>
-            <button type="submit" disabled={isSubmitting}>Register</button>
+            <button style={buttonStyle} type="submit" disabled={isSubmitting}>Register</button>
           </div>
         </Form>
       )}
     >
     </Formik>
+    </Layout.Col>
+    </Layout.Row>
   )
 };
 
