@@ -1,12 +1,14 @@
-import React from 'react';
-import { FiTrash } from 'react-icons/fi'
+import React, { useState } from 'react';
+import { FiTrash, FiUserPlus } from 'react-icons/fi'
 import Editor from '../ui/Editor';
+import Collaborators from '../ui/Collaborators';
 import Card from './Card';
 import { useStateValue } from '../../store/state';
 import repository from '../../store/repository';
 
 const Item = ({ item, style }) => {
   const [, dispatch] = useStateValue();
+  const [form, setForm] = useState(false);
 
   return React.useMemo(() => {
     const handleEditMode = () => {
@@ -30,16 +32,18 @@ const Item = ({ item, style }) => {
 
     const cardBottom = <>
       <FiTrash onClick={deleteNote} />
+      <FiUserPlus onClick={() => setForm(!form)} />
     </>;
 
     return (
       <div style={style}>
         <Card bottom={cardBottom}>
           <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
+          {form && <Collaborators noteId={item._id} />}
         </Card>
       </div>
     );
-  }, [dispatch, item, style]);
+  }, [dispatch, item, style, form]);
 };
 
 export default Item;

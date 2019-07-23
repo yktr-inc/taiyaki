@@ -54,6 +54,11 @@ const App = () => {
           ...state,
           notes: action.notes
         };
+      case 'setSharedNotes':
+        return {
+          ...state,
+          sharedNotes: action.notes
+        };
       default:
         return state;
     }
