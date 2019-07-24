@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import repository from '../../store/repository';
+import { Input, Button, Layout } from 'element-react';
+import { inputStyle, buttonStyle } from '../styles/form.js';
 
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {
@@ -12,37 +14,45 @@ const Login = ({ history }) => {
       if (data.token) {
         repository.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
         localStorage.setItem('token', data.token);
-        history.push('/');
+        history.push('/app');
       }
     });
   };
 
+
+
   return (
     <>
-      <Formik
-        initialValues={{
-          username: 'hknorr',
-          password: 'admin'
-        }}
-        onSubmit={onSubmit}
-        render={({ isSubmitting }) => (
-          <Form>
-            <div>
-              <Field type="text" name="username" placeholder="Username" />
-              <ErrorMessage name="username" component="div" />
-            </div>
-            <div>
-              <Field type="password" name="password" placeholder="Password" />
-              <ErrorMessage name="password" component="div" />
-            </div>
-            <div>
-              <button type="submit" disabled={isSubmitting}>Login</button>
-            </div>
-          </Form>
-        )}
-      >
-      </Formik>
-      <Link to="/register">Create an account</Link>
+      <Layout.Row style={ {marginTop: "50px"} } gutter="20" justify="space-around" type="flex">
+      <Layout.Col span="6">
+        <Formik
+          initialValues={{
+            username: 'hknorr',
+            password: 'admin'
+          }}
+          onSubmit={onSubmit}
+          render={({ isSubmitting }) => (
+            <Form>
+              <div>
+                <Field style={inputStyle} type="text" name="username" component="input" placeholder="Username" />
+                <ErrorMessage name="username" component="div" />
+              </div>
+              <div>
+                <Field style={inputStyle} type="password" name="password" component="input" placeholder="Password" />
+                <ErrorMessage name="password" component="div" />
+              </div>
+              <div>
+                  <button style={buttonStyle} type="submit" disabled={isSubmitting}>Login</button>
+              </div>
+            </Form>
+          )}
+        >
+        </Formik>
+        <Link to="/register">
+          <Button type="success">Create an account</Button>
+        </Link>
+      </Layout.Col>
+      </Layout.Row>
     </>
   )
 };

@@ -1,14 +1,42 @@
 import React, { useState } from 'react';
-import { FiTrash, FiUserPlus } from 'react-icons/fi'
+import { FiTrash, FiUserPlus, FiTag, FiPenTool } from 'react-icons/fi'
 import Editor from '../ui/Editor';
 import Collaborators from '../ui/Collaborators';
-import Card from './Card';
 import { useStateValue } from '../../store/state';
 import repository from '../../store/repository';
+import { Button, Popover, Dialog, Message, Card, Tag } from 'element-react';
+import styled from 'styled-components';
 
-const Item = ({ item, style }) => {
+const Item = ({ item, categories, style }) => {
+
   const [, dispatch] = useStateValue();
   const [form, setForm] = useState(false);
+
+  const cardStyle = {
+    background: item.color,
+  }
+
+  const ButtonRow = styled.div`
+    opacity: 0;
+    transition: 200ms opacity;
+    position: absolute;
+    bottom: 20px;
+  `;
+
+  const StyledCard = styled.div`
+    height: 200px;
+    overflow: hidden;
+    :hover {
+      ${ButtonRow} {
+        opacity: 1;
+      }
+    }
+  `;
+
+  const tagStyle = {
+    position: 'absolute',
+    top: "10px",
+  }
 
   return React.useMemo(() => {
     const handleEditMode = () => {
@@ -28,20 +56,23 @@ const Item = ({ item, style }) => {
           });
         }
       });
+      Message('The note has been successfully deleted.');
     };
 
-    const cardBottom = <>
-      <FiTrash onClick={deleteNote} />
-      <FiUserPlus onClick={() => setForm(!form)} />
-    </>;
-
     return (
-      <div style={style}>
-        <Card bottom={cardBottom}>
+      <>
+        <Card bodyStyle={cardStyle}>
+        <StyledCard>
           <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
-          {form && <Collaborators noteId={item._id} />}
+          { item.category && <Tag style={tagStyle}> {categories.find(el => el._id === item.category ).label} </Tag> }
+          <ButtonRow>
+            <Button onClick={deleteNote}><FiTrash /></Button>
+            <Button onClick={() => setForm(!form)}><FiUserPlus  /></Button>
+            {form && <Collaborators noteId={item._id} />}
+          </ButtonRow>
+        </StyledCard>
         </Card>
-      </div>
+      </>
     );
   }, [dispatch, item, style, form]);
 };

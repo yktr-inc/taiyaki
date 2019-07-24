@@ -1,12 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
 import Notes from './components/views/Notes';
+import Categories from './components/views/Categories';
 import Login from './components/views/Login';
+import NotFound from './components/views/NotFound';
 import Register from './components/views/Register';
 import { StateProvider } from './store/state';
 import repository from './store/repository';
+import { Menu } from 'element-react';
+import 'element-theme-default';
+
+const favicon = {
+  width: '40px',
+}
 
 const App = () => {
+
   const initialState = {
     draft: {
       content: ''
@@ -31,6 +40,14 @@ const App = () => {
         return {
           ...state,
           draft: action.draft
+        };
+      case 'resetDraft':
+        console.log(state);
+        return {
+          ...state,
+          draft: {
+            content: '',
+          }
         };
       case 'addNote':
         return {
@@ -59,6 +76,21 @@ const App = () => {
           ...state,
           sharedNotes: action.notes
         };
+      case 'addCategory':
+        return {
+          ...state,
+          categories: [...state.categories, action.category]
+        };
+      case 'setCategories':
+        return {
+          ...state,
+          categories: action.categories
+        };
+      case 'deleteCategory':
+        return {
+          ...state,
+          categories: state.categories.filter(cat => action.id !== cat._id)
+        };
       default:
         return state;
     }
@@ -73,17 +105,35 @@ const App = () => {
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
       <Router>
+      <Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal">
+        <NavLink to="/app">
+          <Menu.Item index="1">
+            <img style={favicon} src="favicon.png"/>
+            Taiyaki
+          </Menu.Item>
+        </NavLink>
         {localStorage.getItem('token')
-          ? <button onClick={logout}>Logout</button>
+          ? <React.Fragment>
+              <Menu.Item index="2"><a onClick={logout}>Logout</a></Menu.Item>
+              <NavLink to="/categories">
+                <Menu.Item index="2">Categories</Menu.Item>
+              </NavLink>
+            </React.Fragment>
           : <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/register">Register</NavLink>
+            <NavLink to="/login">
+              <Menu.Item index="2">Login</Menu.Item>
+            </NavLink>
+            <NavLink to="/register">
+              <Menu.Item index="3">Register</Menu.Item>
+            </NavLink>
           </>
         }
-
-        <Route path="/" exact component={Notes} />
+      </Menu>
+        <Route path="/" exact component={NotFound} />
+        <Route path="/app" component={Notes} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/categories" component={Categories} />
       </Router>
     </StateProvider>
   );

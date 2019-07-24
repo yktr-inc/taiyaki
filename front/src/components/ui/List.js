@@ -1,30 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
+import { Card, Layout } from 'element-react';
 
-const StyledItem = styled.div`
-  word-wrap: break-word;
-`;
+const cardStyle = {
+  cursor: "pointer",
+};
 
-const StyledList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-
-  ${StyledItem} {
-    max-width: 20%;
-    margin: 20px;
-  }
-`;
-
-const List = ({ items, itemComponent = Item }) => {
+const List = ({ items, categories,  itemComponent = Item }) => {
   const ItemName = itemComponent;
   return (
-    <StyledList>
+    <div>
+      <Layout.Row gutter="20">
       {items.map(item => (
-        <StyledItem key={item._id}><ItemName item={item} /></StyledItem>
+        <Layout.Col key={item._id} span="4">
+          <ItemName categories={categories} item={item} key={item._id} />
+        </Layout.Col>
       ))}
-    </StyledList>
+      {
+        items.length <= 0
+        &&
+        <Layout.Col style={{textAlign: "center"}}>
+          <h3> No notes.  </h3>
+          <h5> Click "Add a new note" </h5>
+        </Layout.Col>
+      }
+      </Layout.Row>
+    </div>
   );
 };
 

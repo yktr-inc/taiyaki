@@ -1,25 +1,34 @@
 const express = require('express');
 const Note = require('../models/note');
+const Category = require('../models/category');
 
 const router = express.Router();
 
 router
-  .get('/', function(req, res) {
+  .get('/', async function(req, res) {
+    const payload = {
+      user: req.user,
+    }
+
+    if(typeof req.query.cat !== 'undefined'){
+      const data = await Category.find({label: req.query.cat}).exec();
+      payload.category = data[0]._id;
+    }
+
     Note.find({
-      user: req.user
+      ...payload,
     }).then(data => res.json(data));
+
   })
   .get('/shared', function(req, res) {
-    console.log(req.user._id);
     Note.find({
       'collaborators._id': req.user._id
     }).then(data => res.json(data));
   })
   .post('/', (req, res) => {
     const { content } = req.body;
-
     const note = new Note({
-      content,
+      ...req.body,
       user: req.user,
     });
 
