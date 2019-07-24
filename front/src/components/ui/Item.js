@@ -67,7 +67,7 @@ const Item = ({ item, categories, style }) => {
           { item.category && <Tag style={tagStyle}> {categories.find(el => el._id === item.category ).label} </Tag> }
           <ButtonRow>
             <Button onClick={deleteNote}><FiTrash /></Button>
-            <FiUserPlus onClick={() => setForm(!form)} />
+            <Button onClick={() => setForm(!form)}><FiUserPlus  /></Button>
             {form && <Collaborators noteId={item._id} />}
           </ButtonRow>
         </StyledCard>

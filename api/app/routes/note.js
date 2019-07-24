@@ -21,7 +21,6 @@ router
 
   })
   .get('/shared', function(req, res) {
-    console.log(req.user._id);
     Note.find({
       'collaborators._id': req.user._id
     }).then(data => res.json(data));
