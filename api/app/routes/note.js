@@ -56,8 +56,19 @@ router
       res.json(movie)
     );
   })
-  .delete('/:id', (req, res) => {
-    Note.findByIdAndDelete(req.params.id).then(() => res.sendStatus(204));
+  .delete('/:id', async (req, res) => {
+    const note = await Note.findById(req.params.id);
+    if (note.user === req.user._id) {
+      note.remove().then(() => res.sendStatus(204));
+    } else {
+      note.update({
+        $pull: {
+          collaborators: {
+            _id: req.user._id
+          }
+        }
+      }).then(() => res.sendStatus(204));
+    }
   });
 
 module.exports = router;
