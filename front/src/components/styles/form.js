@@ -13,6 +13,7 @@ export const inputStyle = {
        padding: "3px 10px",
        width: "100%",
        transition: "border-color .2s cubic-bezier(.645,.045,.355,1)",
+       marginTop: "10px",
   }
 
 export const buttonStyle = {
@@ -31,4 +32,5 @@ export const buttonStyle = {
     margin: "0",
     padding: "10px 15px",
     borderRadius: "4px",
+    marginTop: "10px",
   }
