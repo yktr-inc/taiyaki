@@ -5,9 +5,7 @@ const router = express.Router();
 
 router
   .get('/', function(req, res) {
-    Category.find({
-      user: req.user
-    }).then(data => res.json(data));
+    Category.find().then(data => res.json(data));
   })
   .post('/', (req, res) => {
     const { label } = req.body;

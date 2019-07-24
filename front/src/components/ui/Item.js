@@ -64,7 +64,9 @@ const Item = ({ item, categories, style }) => {
         <Card bodyStyle={cardStyle}>
         <StyledCard>
           <Editor readOnly={true} value={item.content} onClick={handleEditMode} />
-          { item.category && <Tag style={tagStyle}> {categories.find(el => el._id === item.category ).label} </Tag> }
+          { item.category && <Tag style={tagStyle}>
+            {categories.length > 0 && categories.find(el => el._id === item.category ).label}
+          </Tag> }
           <ButtonRow>
             <Button onClick={deleteNote}><FiTrash /></Button>
             <Button onClick={() => setForm(!form)}><FiUserPlus  /></Button>
@@ -74,7 +76,7 @@ const Item = ({ item, categories, style }) => {
         </Card>
       </>
     );
-  }, [dispatch, item, style, form]);
+  }, [dispatch, item, style, form, categories]);
 };
 
 export default Item;
