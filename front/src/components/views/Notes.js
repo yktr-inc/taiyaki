@@ -20,7 +20,7 @@ const marginBlock = {
 const categoriesStyle = {
   minHeight: "92vh",
   a: {
-    decoration: "none",
+    textDecoration: "none !important"
   }
 };
 

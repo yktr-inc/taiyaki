@@ -5,6 +5,11 @@ import repository from '../../store/repository';
 import { Input, Button, Layout } from 'element-react';
 import { inputStyle, buttonStyle } from '../styles/form.js';
 
+
+const buttonRegister = {
+  width: "100%"
+}
+
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {
     repository.post('/login', {
@@ -49,7 +54,7 @@ const Login = ({ history }) => {
         >
         </Formik>
         <Link to="/register">
-          <Button type="success">Create an account</Button>
+          <Button style={{...buttonRegister, marginTop: "20px"}} size="small" type="success">Create an account</Button>
         </Link>
       </Layout.Col>
       </Layout.Row>
