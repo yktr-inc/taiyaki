@@ -108,7 +108,7 @@ const Input = () => {
         </Layout.Col>
         <Layout.Col span="12">
         <ColorPicker style={colorpickerStyle} onChange={changeColor} value={draft.color}></ColorPicker>
-        <Select filterable={true} value={draft.category} clearable={true} onClear={deleteCategory} onChange={changeCategory}>
+        <Select style={{top: "-7px"}} filterable={true} value={draft.category} clearable={true} onClear={deleteCategory} onChange={changeCategory}>
           {categories && categories.map(el => {
               return <Select.Option key={el._id} label={el.label} value={el._id} />
             })}

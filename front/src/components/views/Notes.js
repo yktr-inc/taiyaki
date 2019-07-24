@@ -1,4 +1,4 @@
-import React, { useEffect, useSate } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../ui/Input';
 import List from '../ui/List';
@@ -26,6 +26,8 @@ const categoriesStyle = {
 
 const Notes = ({ history }) => {
   const [{ notes, categories, sharedNotes }, dispatch] = useStateValue();
+
+  const [sharedVisible, setSharedVisible] = useState(true);
 
   const createNewNote = () => {
     dispatch({ type: 'resetDraft' });
@@ -67,6 +69,11 @@ const Notes = ({ history }) => {
             notes: res.data
           });
         }
+        if(parsed === ''){
+          setSharedVisible(true);
+        }else{
+          setSharedVisible(false);
+        }
     });
     }));
   }, [dispatch]);
@@ -94,9 +101,10 @@ const Notes = ({ history }) => {
         </Layout.Row>
         <Layout.Row style={marginBlock} type="flex">
           <div style={containerStyle}>
+            <h3> Notes </h3>
             <List categories={categories} items={notes} />
-            {sharedNotes && <>
-              <hr/>
+            {sharedVisible && sharedNotes && <>
+              <h3 style={marginBlock}> Shared with me </h3>
               <List categories={categories} items={sharedNotes} />
             </>}
           </div>
