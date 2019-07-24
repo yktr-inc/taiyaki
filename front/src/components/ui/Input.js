@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { FiX, FiTag, FiPenTool } from 'react-icons/fi';
+import { FiX } from 'react-icons/fi';
 import { debounce } from 'lodash';
 import Editor from './Editor';
 import repository from '../../store/repository';
 import { useStateValue } from '../../store/state';
-import { Message, Layout, Button, ColorPicker, Select } from 'element-react';
+import { ColorPicker, Layout, Message, Select } from 'element-react';
 
 Modal.setAppElement('#root');
 

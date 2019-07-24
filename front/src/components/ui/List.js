@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import Item from './Item';
-import { Card, Layout } from 'element-react';
+import { Layout } from 'element-react';
 
 const cardStyle = {
   cursor: "pointer",

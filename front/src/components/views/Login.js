@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import repository from '../../store/repository';
-import { Input, Button, Layout } from 'element-react';
-import { inputStyle, buttonStyle } from '../styles/form.js';
+import { Button, Layout } from 'element-react';
+import { buttonStyle, inputStyle } from '../styles/form.js';
 
 const Login = ({ history }) => {
   const onSubmit = ({ username, password }) => {

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Input from '../ui/Input';
 import List from '../ui/List';
 import { useStateValue } from '../../store/state';
 import repository from '../../store/repository';
 import { Button, Layout, Menu } from 'element-react';
-import { BrowserRouter as Router, NavLink, Route, BrowserHistory } from 'react-router-dom';
 import queryString from 'query-string';
 
 const containerStyle = {

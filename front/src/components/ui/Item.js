@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { FiTrash, FiUserPlus, FiTag, FiPenTool } from 'react-icons/fi'
+import { FiTrash, FiUserPlus } from 'react-icons/fi'
 import Editor from '../ui/Editor';
 import Collaborators from '../ui/Collaborators';
 import { useStateValue } from '../../store/state';
 import repository from '../../store/repository';
-import { Button, Popover, Dialog, Message, Card, Tag } from 'element-react';
+import { Button, Card, Message, Tag } from 'element-react';
 import styled from 'styled-components';
 
 const Item = ({ item, categories, style }) => {
