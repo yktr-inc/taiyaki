@@ -56,6 +56,12 @@ const App = () => {
           )
         };
       case 'deleteNote':
+        if (state.sharedNotes.findIndex(note => action.id === note._id) !== -1) {
+          return {
+            ...state,
+            sharedNotes: state.sharedNotes.filter(note => action.id !== note._id)
+          };
+        }
         return {
           ...state,
           notes: state.notes.filter(note => action.id !== note._id)
